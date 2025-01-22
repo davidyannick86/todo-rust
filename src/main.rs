@@ -4,6 +4,25 @@ use std::{error::Error, time::SystemTime};
 
 pub mod main_test;
 
+trait Storage {
+    fn save(&self) -> Result<(), Box<dyn Error>>;
+    fn load(&self) -> Result<(), Box<dyn Error>>;
+}
+
+struct JSONStorage {
+    filename: String,
+}
+
+impl Storage for JSONStorage {
+    fn save(&self) -> Result<(), Box<dyn Error>> {
+        Ok(())
+    }
+
+    fn load(&self) -> Result<(), Box<dyn Error>> {
+        Ok(())
+    }
+}
+
 #[derive(Debug)]
 struct Todo {
     title: String,
@@ -81,6 +100,11 @@ fn main() {
     });
 
     println!("{table}")
+}
+
+fn save_todos(filename: String, storage: impl Storage) -> Result<(), Box<dyn Error>> {
+    storage.save();
+    Ok(())
 }
 
 fn display_checkmark(completed: bool) -> &'static str {
